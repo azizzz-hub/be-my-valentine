@@ -319,12 +319,12 @@
       const aRect = arena.getBoundingClientRect();
       const bRect = noBtn.getBoundingClientRect();
 
-      const padding = window.innerWidth < 768 ? 20 : 10;
+      const padding = 24;
       const maxLeft = aRect.width - bRect.width - padding;
       const maxTop  = aRect.height - bRect.height - padding;
 
       const left = rand(padding, Math.max(padding, maxLeft));
-      const top  = rand(window.innerWidth < 768 ? 60 : padding, Math.max(padding, maxTop));
+      const top = rand(padding, Math.max(padding, maxTop));
 
       noBtn.style.left = left + "px";
       noBtn.style.top = top + "px";
