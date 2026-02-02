@@ -3,34 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>💘 Valentine?</title>
+  <title>💘 Rizana</title>
+
   <style>
     :root{
-      --bg1:#ffd1e8;
-      --bg2:#ffb3d9;
+      --pink1:#ffd1e8;
+      --pink2:#ffb3d9;
       --card:#ffffffcc;
       --accent:#ff4d9d;
       --accent2:#ff2e86;
       --text:#3a1b2a;
-      --shadow: 0 20px 60px rgba(0,0,0,.12);
+      --shadow: 0 20px 60px rgba(0,0,0,.14);
     }
 
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      background: radial-gradient(1000px 600px at 20% 10%, #fff 0%, transparent 55%),
-                  radial-gradient(900px 500px at 80% 20%, #fff 0%, transparent 55%),
-                  linear-gradient(135deg,var(--bg1),var(--bg2));
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       overflow:hidden;
+      position:relative;
+      background: linear-gradient(135deg,var(--pink1),var(--pink2));
     }
 
-    /* floating hearts */
+    /* Background photo layer */
+    .bg-photo{
+      position:absolute;
+      inset:-40px; /* extra to avoid blur edges */
+      background-image: url("rizana.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: blur(16px) saturate(1.1);
+      transform: scale(1.08);
+      opacity: 0.65;
+      z-index: -3;
+    }
+
+    /* Pink overlay so it stays romantic */
+    .bg-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(255,255,255,.50) 0%, transparent 55%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.35) 0%, transparent 55%),
+        linear-gradient(135deg, rgba(255,209,232,.78), rgba(255,179,217,.78));
+      z-index: -2;
+    }
+
+    /* Floating hearts */
     .heart{
       position:absolute;
       font-size:20px;
@@ -39,18 +64,19 @@
       user-select:none;
       pointer-events:none;
       filter: drop-shadow(0 6px 10px rgba(0,0,0,.08));
+      z-index:-1;
     }
     @keyframes floatUp{
-      from{ transform: translateY(30vh) translateX(0) rotate(0deg); }
+      from{ transform: translateY(25vh) translateX(0) rotate(0deg); }
       to  { transform: translateY(-120vh) translateX(60px) rotate(360deg); }
     }
 
     .card{
-      width:min(560px, 92vw);
+      width:min(600px, 92vw);
       background:var(--card);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       border: 2px solid #ffffff90;
-      border-radius:24px;
+      border-radius:26px;
       box-shadow: var(--shadow);
       padding:28px 22px 22px;
       text-align:center;
@@ -59,13 +85,14 @@
 
     h1{
       margin:6px 0 8px;
-      font-size: clamp(28px, 4vw, 40px);
+      font-size: clamp(26px, 4vw, 40px);
       letter-spacing: .2px;
     }
+
     .subtitle{
-      margin:0 0 18px;
+      margin:0 0 16px;
       font-size: 16px;
-      opacity:.85;
+      opacity:.88;
       line-height:1.35;
     }
 
@@ -80,11 +107,11 @@
     }
 
     .buttons-wrap{
-      margin-top:18px;
-      height:120px;
+      margin-top:16px;
+      height:140px;
       position:relative;
       border-radius:18px;
-      background: linear-gradient(180deg, #ffffff80, #ffffff40);
+      background: linear-gradient(180deg, #ffffff85, #ffffff40);
       border: 1px dashed #ffffffaa;
       overflow:hidden;
     }
@@ -99,6 +126,7 @@
       transition: transform .12s ease, box-shadow .12s ease;
       touch-action: manipulation;
       user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     button:active{ transform: scale(.98); }
 
@@ -109,7 +137,7 @@
       left: 50%;
       top: 34px;
       transform: translateX(-50%);
-      min-width: 140px;
+      min-width: 170px;
     }
     #yesBtn:hover{ box-shadow: 0 14px 28px rgba(255,77,157,.35); }
 
@@ -119,101 +147,153 @@
       position:absolute;
       left: 14%;
       top: 36px;
-      min-width: 140px;
+      min-width: 150px;
       border: 2px solid #ffffff;
     }
 
-    .hint{
-      margin-top:14px;
-      font-size: 13px;
-      opacity:.7;
+    .micro{
+      margin-top:12px;
+      font-size:13px;
+      opacity:.78;
+      min-height: 18px;
     }
 
     .toast{
-      margin-top:14px;
+      margin-top:10px;
       font-size:16px;
       min-height: 24px;
-      font-weight: 600;
+      font-weight: 700;
       color: #7a1f4a;
     }
 
     .final{
       display:none;
-      margin-top:12px;
-      padding:14px 14px;
-      border-radius:16px;
-      background: #ffffffb0;
+      margin-top:14px;
+      padding:16px 14px;
+      border-radius:18px;
+      background: #ffffffb8;
       border: 1px solid #ffffff;
       box-shadow: 0 12px 26px rgba(0,0,0,.10);
     }
     .final h2{
-      margin:0 0 6px;
+      margin:0 0 8px;
       font-size:22px;
       color:#5c1335;
     }
     .final p{
       margin:0;
       line-height:1.35;
+      font-size:16px;
     }
 
-    .small{
+    /* Song section */
+    .songBox{
+      margin-top:14px;
+      padding:12px;
+      border-radius:16px;
+      background: #ffffffa8;
+      border: 1px solid #ffffff;
+    }
+    .songNote{
+      font-size:13px;
+      opacity:.75;
+      margin: 0 0 10px;
+    }
+    #playBtn{
+      width:100%;
+      background: linear-gradient(180deg, #ff7bb9, #ff3e97);
+      color:white;
+      font-weight:800;
+      letter-spacing:.2px;
+      animation: pulse 1.3s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{ transform: scale(1); box-shadow: 0 12px 26px rgba(255,62,151,.25); }
+      50%{ transform: scale(1.03); box-shadow: 0 18px 36px rgba(255,62,151,.32); }
+    }
+    .tiny{
       font-size:12px;
       opacity:.65;
       margin-top:10px;
     }
+
+    .hint{
+      margin-top:12px;
+      font-size: 13px;
+      opacity:.7;
+    }
   </style>
 </head>
+
 <body>
+  <!-- background layers -->
+  <div class="bg-photo"></div>
+  <div class="bg-overlay"></div>
+
   <div class="card" id="card">
     <div class="big-emoji">💘</div>
-    <h1>Will you be my Valentine?</h1>
+    <h1>Rizana, will you be my Valentine?</h1>
     <p class="subtitle">
-      I know we’re long distance, but I still want to make this day ours. 🥺✨
+      Long distance can’t stop me from asking the most important question 😌💗
     </p>
 
     <div class="buttons-wrap" id="arena" aria-label="Valentine buttons area">
-      <button id="yesBtn" aria-label="Yes, I will be your Valentine">Yes 💖</button>
-      <button id="noBtn" aria-label="No">No 🙃</button>
+      <button id="yesBtn" aria-label="Yes button">Yes 💖</button>
+      <button id="noBtn" aria-label="No button">No 🙃</button>
     </div>
 
+    <div class="micro" id="microText"></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <div class="final" id="final">
-      <h2>Perfect 😭💗</h2>
-      <p id="finalText">Be ready on February 14 — I’m making it special for us.</p>
-      <div class="small">Screenshot this page and send it back to me 😌</div>
+      <h2>Perfect, my love 💗</h2>
+      <p>Be ready on February 14th… I’ll let you know the time and everything 😌</p>
+
+      <div class="songBox">
+        <p class="songNote">🎶 A song for you.</p>
+        <button id="playBtn" aria-label="Play our song">Play our song ▶️</button>
+        <div class="tiny" id="songStatus"></div>
+      </div>
+
+      <div class="tiny">Screenshot this and send it to me 😈</div>
     </div>
 
     <div class="hint">Tip: try pressing “No” 😈</div>
   </div>
 
+  <!-- audio (iPhone-friendly: must be started by a click) -->
+  <audio id="song" src="our-song.mp3" preload="auto"></audio>
+
   <script>
-    // ====== Customize these ======
-    const PERSON_NAME = ""; // e.g. "Babe" or her name, leave "" to keep generic
-    const FINAL_MESSAGE = "Be ready on February 14 — I’m making it special for us.";
+    // ===== Config =====
     const WRONG_MESSAGES = [
       "Nope 😌",
       "Wrong button 😭",
       "Nice try 😂",
       "It’s a yes day 💖",
-      "You can’t say no to love 😈"
+      "Be serious… 😈"
     ];
-    // ============================
+
+    // YES multi-click prompts (small text after each click)
+    const YES_STEPS = [
+      { btn: "Are you sure? 🤨", small: "Think carefully… this is serious 😌" },
+      { btn: "Really sure?? 😳", small: "No pressure… but also yes pressure 😭💗" },
+      { btn: "Okay 💖", small: "Good choice 😌 now confirm it." }
+    ];
+    // ===================
 
     const arena = document.getElementById("arena");
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const toast = document.getElementById("toast");
+    const microText = document.getElementById("microText");
     const finalBox = document.getElementById("final");
-    const finalText = document.getElementById("finalText");
 
-    // Optional personalization
-    if (PERSON_NAME.trim()) {
-      document.querySelector("h1").textContent = `Will you be my Valentine, ${PERSON_NAME}?`;
-    }
-    finalText.textContent = FINAL_MESSAGE;
+    const song = document.getElementById("song");
+    const playBtn = document.getElementById("playBtn");
+    const songStatus = document.getElementById("songStatus");
 
-    // Create floating hearts
+    // Floating hearts
     const hearts = ["💗","💖","💘","💕","💞"];
     for (let i = 0; i < 18; i++){
       const h = document.createElement("div");
@@ -229,7 +309,6 @@
     function rand(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
 
     function moveNoButton(){
-      // Arena bounds
       const aRect = arena.getBoundingClientRect();
       const bRect = noBtn.getBoundingClientRect();
 
@@ -244,22 +323,21 @@
       noBtn.style.top = top + "px";
 
       toast.textContent = WRONG_MESSAGES[rand(0, WRONG_MESSAGES.length - 1)];
+      microText.textContent = "";
     }
 
-    // Dodge on hover (desktop) + touchstart (mobile) + when cursor gets near
+    // No dodges (desktop + iPhone)
     noBtn.addEventListener("mouseenter", moveNoButton);
     noBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
       moveNoButton();
     }, { passive: false });
 
-    // If someone tries super fast click, still dodge
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
       moveNoButton();
     });
 
-    // Extra: if pointer gets close inside arena, dodge
     arena.addEventListener("mousemove", (e) => {
       const b = noBtn.getBoundingClientRect();
       const dx = e.clientX - (b.left + b.width/2);
@@ -268,10 +346,24 @@
       if (dist < 90) moveNoButton();
     });
 
+    // YES requires 3 clicks with small texts
+    let yesStep = 0;
     yesBtn.addEventListener("click", () => {
       toast.textContent = "";
+
+      // Steps 0 and 1: change text + show micro text
+      if (yesStep < YES_STEPS.length - 1) {
+        microText.textContent = YES_STEPS[yesStep].small;
+        yesBtn.textContent = YES_STEPS[yesStep].btn;
+        yesStep++;
+        return;
+      }
+
+      // Final click: show final screen
+      microText.textContent = YES_STEPS[YES_STEPS.length - 1].small;
+      yesBtn.textContent = YES_STEPS[YES_STEPS.length - 1].btn;
+
       finalBox.style.display = "block";
-      // Lock the no button so it doesn't keep moving after yes
       noBtn.style.display = "none";
       yesBtn.textContent = "YAY 💞";
       yesBtn.style.transform = "translateX(-50%) scale(1.03)";
@@ -279,22 +371,46 @@
     });
 
     function confettiHearts(){
-      for (let i = 0; i < 30; i++){
+      for (let i = 0; i < 28; i++){
         const s = document.createElement("div");
         s.className = "heart";
         s.textContent = hearts[Math.floor(Math.random()*hearts.length)];
         const cardRect = document.getElementById("card").getBoundingClientRect();
-        s.style.left = (cardRect.left + cardRect.width/2 + rand(-120,120)) + "px";
-        s.style.top = (cardRect.top + rand(0,80)) + "px";
-        s.style.opacity = .8;
+        s.style.left = (cardRect.left + cardRect.width/2 + rand(-140,140)) + "px";
+        s.style.top = (cardRect.top + rand(0,90)) + "px";
+        s.style.opacity = .85;
         s.style.animationDuration = (3 + Math.random()*3) + "s";
         document.body.appendChild(s);
         setTimeout(()=>s.remove(), 6000);
       }
     }
 
-    // Start with a random position for "No"
-    // after layout paints
+    // Song button (iPhone safe: user action)
+    function setSongStatus(msg){ songStatus.textContent = msg; }
+
+    playBtn.addEventListener("click", async () => {
+      try {
+        if (song.paused) {
+          await song.play();
+          playBtn.textContent = "Pause ⏸️";
+          setSongStatus("Playing 💗");
+        } else {
+          song.pause();
+          playBtn.textContent = "Play our song ▶️";
+          setSongStatus("Paused 😌");
+        }
+      } catch (err) {
+        // If iPhone blocks for any reason, user can tap again
+        setSongStatus("Tap again — iPhone sometimes needs a second tap 😭");
+      }
+    });
+
+    song.addEventListener("ended", () => {
+      playBtn.textContent = "Play our song ▶️";
+      setSongStatus("Replay? 😌💖");
+    });
+
+    // Start with a random "No" position
     window.addEventListener("load", () => moveNoButton());
     window.addEventListener("resize", () => moveNoButton());
   </script>
