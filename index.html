@@ -28,7 +28,6 @@
       color:var(--text);
       overflow:hidden;
       position:relative;
-      background: linear-gradient(25deg,var(--pink1),var(--pink2));
     }
 
     /* Background photo layer */
@@ -47,12 +46,14 @@
     /* Pink overlay so it stays romantic */
     .bg-overlay{
       position:absolute;
-      inset:0;
-      background:
-        radial-gradient(900px 500px at 20% 10%, rgba(255,255,255,.50) 0%, transparent 55%),
-        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.35) 0%, transparent 55%),
-        linear-gradient(135deg, rgba(255,209,232,.40), rgba(255,179,217,.40));
-      z-index: -2;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 230, 240, 0.30),
+      rgba(255, 200, 220, 0.30)
+    );
+  z-index:-2;
     }
 
     /* Floating hearts */
