@@ -229,6 +229,20 @@
       font-size: 13px;
       opacity:.7;
     }
+/* iPhone fix: allow scrolling so music button is visible */
+@media (max-width: 480px) {
+  body {
+    overflow: auto;
+    padding: 14px;
+  }
+
+  .card {
+    max-height: calc(100dvh - 28px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
   </style>
 </head>
 
