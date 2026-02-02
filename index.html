@@ -108,14 +108,20 @@
     }
 
     .buttons-wrap{
-      margin-top:16px;
-      height:140px;
-      position:relative;
-      border-radius:18px;
-      background: linear-gradient(180deg, #ffffff85, #ffffff40);
-      border: 1px dashed #ffffffaa;
-      overflow:hidden;
-    }
+  margin-top:16px;
+  height:220px; /* MORE SPACE FOR MOBILE */
+  position:relative;
+  border-radius:18px;
+  background: linear-gradient(180deg, #ffffff85, #ffffff40);
+  border: 1px dashed #ffffffaa;
+  overflow:hidden;
+}
+
+@media (min-width: 768px){
+  .buttons-wrap{
+    height:140px; /* desktop stays the same */
+  }
+}
 
     button{
       border:none;
@@ -313,12 +319,12 @@
       const aRect = arena.getBoundingClientRect();
       const bRect = noBtn.getBoundingClientRect();
 
-      const padding = 10;
+      const padding = window.innerWidth < 768 ? 20 : 10;
       const maxLeft = aRect.width - bRect.width - padding;
       const maxTop  = aRect.height - bRect.height - padding;
 
       const left = rand(padding, Math.max(padding, maxLeft));
-      const top  = rand(padding, Math.max(padding, maxTop));
+      const top  = rand(window.innerWidth < 768 ? 60 : padding, Math.max(padding, maxTop));
 
       noBtn.style.left = left + "px";
       noBtn.style.top = top + "px";
@@ -338,6 +344,8 @@
       e.preventDefault();
       moveNoButton();
     });
+
+    arena.addEventListener("touchmove", moveNoButton, { passive: true });
 
     arena.addEventListener("mousemove", (e) => {
       const b = noBtn.getBoundingClientRect();
